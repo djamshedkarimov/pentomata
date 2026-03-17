@@ -9,12 +9,14 @@
 # If findings exist, checks each one has: endpoint, evidence, repro steps, severity.
 # Warns (but doesn't block) if findings look incomplete.
 
+TOOLKIT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
 # Look for active report in common engagement locations
 REPORT=""
 for path in \
   "$PWD/reports/active-exploitation-results.md" \
   "$PWD/active-exploitation-results.md" \
-  "$HOME/pentomata/engagements/*/reports/active-exploitation-results.md"; do
+  "$TOOLKIT_DIR/engagements/*/reports/active-exploitation-results.md"; do
   if [[ -f "$path" ]]; then
     REPORT="$path"
     break
