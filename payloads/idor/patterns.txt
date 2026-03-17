@@ -1,0 +1,50 @@
+# IDOR Test Patterns
+
+## Numeric ID manipulation
+# Original: /api/users/123/profile
+# Try: /api/users/124/profile, /api/users/1/profile, /api/users/0/profile
+
+## UUID guessing
+# Increment last byte
+# Try null UUID: 00000000-0000-0000-0000-000000000000
+# Try sequential UUIDs if v1 (time-based)
+
+## Parameter pollution
+?user_id=123&user_id=124
+?id[]=123&id[]=124
+
+## HTTP method switching
+GET /api/users/124 → 403
+PUT /api/users/124 → 200 (missing authz on write)
+DELETE /api/users/124 → 200
+
+## Encoded IDs
+# Base64: decode, modify, re-encode
+# Hashed IDs: try MD5/SHA1 of sequential integers
+# JWT-embedded IDs: decode, modify sub claim, re-sign if weak key
+
+## Common IDOR endpoints
+/api/users/{id}
+/api/users/{id}/profile
+/api/users/{id}/settings
+/api/orders/{id}
+/api/invoices/{id}
+/api/documents/{id}
+/api/messages/{id}
+/api/files/{id}/download
+/api/reports/{id}
+/api/payments/{id}
+/api/subscriptions/{id}
+
+## GraphQL IDOR
+query { user(id: "OTHER_USER_ID") { email, phone, address } }
+mutation { updateUser(id: "OTHER_USER_ID", input: { role: "admin" }) }
+
+## Bulk/batch endpoint abuse
+POST /api/users/bulk
+Body: { "ids": [123, 124, 125, 126] }
+
+## State-based IDOR
+# Access draft/pending resources of other users
+# Access soft-deleted resources
+# Access resources in different tenant/organization

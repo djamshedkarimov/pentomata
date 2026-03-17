@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__claude_ai_Linear__save_issue",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./hooks/protect-linear-description.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./hooks/validate-findings-on-stop.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

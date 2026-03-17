@@ -1,0 +1,14 @@
+# Engagement data — client-specific, confidential, never committed
+# Each engagement contains reports, evidence, source code, scan results, and notes
+engagements/
+
+# Claude Code local/session files
+.claude/settings.local.json
+.claude/projects/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
